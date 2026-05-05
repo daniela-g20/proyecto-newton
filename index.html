@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Entrenamiento de Spider-Man</title>
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            background-color: #0b1a2a;
+            color: white;
+        }
+        .box {
+            background: #1f3b5c;
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+            margin: auto;
+        }
+        input {
+            margin: 10px;
+            padding: 5px;
+        }
+        button {
+            background-color: red;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<h1>🦸‍♂️ Sistema de Entrenamiento</h1>
+
+<div class="box">
+    <label>Masa (kg):</label><br>
+    <input type="number" id="masa"><br>
+
+    <label>Aceleración (m/s²):</label><br>
+    <input type="number" id="aceleracion"><br>
+
+    <button onclick="calcular()">Calcular Fuerza</button>
+
+    <h2 id="resultado"></h2>
+</div>
+
+<script>
+function calcular() {
+    let m = document.getElementById("masa").value;
+    let a = document.getElementById("aceleracion").value;
+
+    let F = m * a;
+
+    document.getElementById("resultado").innerText =
+        "Fuerza necesaria: " + F + " N";
+}
+</script>
+
+</body>
+</html>
