@@ -1,60 +1,228 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Entrenamiento de Spider-Man</title>
-    <style>
-        body {
-            font-family: Arial;
-            text-align: center;
-            background-color: #0b1a2a;
-            color: white;
-        }
-        .box {
-            background: #1f3b5c;
-            padding: 20px;
-            border-radius: 10px;
-            width: 300px;
-            margin: auto;
-        }
-        input {
-            margin: 10px;
-            padding: 5px;
-        }
-        button {
-            background-color: red;
-            color: white;
-            padding: 10px;
-            border: none;
-            cursor: pointer;
-        }
-    </style>
+<title> Sistema de Entrenamiento Stark</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Orbitron', sans-serif;
+    background: radial-gradient(circle, #020c1b, #000);
+    color: #00f7ff;
+    text-align: center;
+}
+
+h1 {
+    text-shadow: 0 0 15px #00f7ff;
+}
+
+.box {
+    margin: 40px auto;
+    padding: 20px;
+    width: 350px;
+    border: 2px solid #00f7ff;
+    border-radius: 15px;
+    box-shadow: 0 0 20px #00f7ff;
+    background: rgba(0,0,0,0.7);
+}
+
+input, select {
+    margin: 10px;
+    padding: 8px;
+    width: 80%;
+    background: black;
+    border: 1px solid #00f7ff;
+    color: #00f7ff;
+}
+
+button {
+    background: #00f7ff;
+    color: black;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: red;
+    color: white;
+}
+
+#resultado {
+    font-size: 20px;
+    margin-top: 15px;
+    animation: glow 1s infinite alternate;
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 10px #00f7ff; }
+    to { text-shadow: 0 0 20px #00f7ff; }
+}
+
+#jarvis {
+    margin-top: 10px;
+    font-style: italic;
+    color: #00ff9c;
+}
+</style>
 </head>
+
 <body>
 
-<h1>🦸‍♂️ Sistema de Entrenamiento</h1>
+<h1> SISTEMA STARK</h1>
+<p>Bienvenido, Selecciona una misión.</p>
 
 <div class="box">
-    <label>Masa (kg):</label><br>
-    <input type="number" id="masa"><br>
 
-    <label>Aceleración (m/s²):</label><br>
-    <input type="number" id="aceleracion"><br>
+<select id="tipo" onchange="mostrarCampos()">
+    <option value="">--Selecciona misión--</option>
+    <option value="1">Sin fricción</option>
+    <option value="2">Con fricción</option>
+    <option value="3">Polea</option>
+    <option value="4">3 masas</option>
+    <option value="5">Fuerza con ángulo</option>
+</select>
 
-    <button onclick="calcular()">Calcular Fuerza</button>
+<div id="campos"></div>
 
-    <h2 id="resultado"></h2>
+<button onclick="resolver()">Ejecutar cálculo</button>
+
+<h3 id="resultado"></h3>
+<p id="procedimiento"></p>
+<p id="jarvis"></p>
+
 </div>
 
 <script>
-function calcular() {
-    let m = document.getElementById("masa").value;
-    let a = document.getElementById("aceleracion").value;
 
-    let F = m * a;
-
-    document.getElementById("resultado").innerText =
-        "Fuerza necesaria: " + F + " N";
+function hablar(msg) {
+    document.getElementById("jarvis").innerText = "JARVIS: " + msg;
 }
+
+function mostrarCampos() {
+    let tipo = document.getElementById("tipo").value;
+    let campos = document.getElementById("campos");
+
+    hablar("Configurando misión...");
+
+    if (tipo == "1") {
+        campos.innerHTML = `
+        <input id="m1" placeholder="Masa">
+        <input id="F" placeholder="Fuerza">
+        `;
+    }
+
+    else if (tipo == "2") {
+        campos.innerHTML = `
+        <input id="m1" placeholder="Masa">
+        <input id="F" placeholder="Fuerza">
+        <input id="mu" placeholder="Coeficiente fricción">
+        `;
+    }
+
+    else if (tipo == "3") {
+        campos.innerHTML = `
+        <input id="m1" placeholder="Masa 1">
+        <input id="m2" placeholder="Masa 2">
+        `;
+    }
+
+    else if (tipo == "4") {
+        campos.innerHTML = `
+        <input id="m1" placeholder="Masa 1">
+        <input id="m2" placeholder="Masa 2">
+        <input id="m3" placeholder="Masa 3">
+        `;
+    }
+
+    else if (tipo == "5") {
+        campos.innerHTML = `
+        <input id="m1" placeholder="Masa">
+        <input id="F" placeholder="Fuerza">
+        <input id="angulo" placeholder="Ángulo">
+        `;
+    }
+
+    else {
+        campos.innerHTML = "";
+    }
+}
+
+function resolver() {
+    let tipo = document.getElementById("tipo").value;
+    let g = 9.8;
+    let resultado = "";
+    let procedimiento = "";
+
+    hablar("Procesando datos...");
+
+    if (tipo == "1") {
+        let m = parseFloat(document.getElementById("m1").value);
+        let F = parseFloat(document.getElementById("F").value);
+
+        let a = F / m;
+
+        resultado = "Aceleración: " + a.toFixed(2);
+        procedimiento = "F = m·a";
+        hablar("Cálculo completado.");
+    }
+
+    else if (tipo == "2") {
+        let m = parseFloat(document.getElementById("m1").value);
+        let F = parseFloat(document.getElementById("F").value);
+        let mu = parseFloat(document.getElementById("mu").value);
+
+        let fr = mu * m * g;
+        let a = (F - fr) / m;
+
+        resultado = "Aceleración: " + a.toFixed(2);
+        procedimiento = "Fricción = μ·m·g → F - fricción = m·a";
+        hablar("Fricción considerada.");
+    }
+
+    else if (tipo == "3") {
+        let m1 = parseFloat(document.getElementById("m1").value);
+        let m2 = parseFloat(document.getElementById("m2").value);
+
+        let a = (m2 - m1) * g / (m1 + m2);
+
+        resultado = "Aceleración: " + a.toFixed(2);
+        procedimiento = "Sistema de polea";
+        hablar("Sistema de poleas activo.");
+    }
+
+    else if (tipo == "4") {
+        let m1 = parseFloat(document.getElementById("m1").value);
+        let m2 = parseFloat(document.getElementById("m2").value);
+        let m3 = parseFloat(document.getElementById("m3").value);
+
+        let a = (m3 - m1) * g / (m1 + m2 + m3);
+
+        resultado = "Aceleración: " + a.toFixed(2);
+        procedimiento = "Sistema de 3 masas";
+        hablar("Sistema complejo resuelto.");
+    }
+
+    else if (tipo == "5") {
+        let m = parseFloat(document.getElementById("m1").value);
+        let F = parseFloat(document.getElementById("F").value);
+        let ang = parseFloat(document.getElementById("angulo").value);
+
+        let rad = ang * Math.PI / 180;
+        let Fx = F * Math.cos(rad);
+        let a = Fx / m;
+
+        resultado = "Aceleración: " + a.toFixed(2);
+        procedimiento = "Fx = F·cos(θ)";
+        hablar("Ángulo procesado.");
+    }
+
+    document.getElementById("resultado").innerText = resultado;
+    document.getElementById("procedimiento").innerText = procedimiento;
+}
+
 </script>
 
 </body>
