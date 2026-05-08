@@ -6,24 +6,76 @@
 <style>
 body {
     margin: 0;
-    font-family: 'Orbitron', sans-serif;
-    background: radial-gradient(circle, #020c1b, #000);
-    color: #00f7ff;
+    font-family: 'Poppins', sans-serif;
+    background: radial-gradient(circle, #0f172a, #020617 70%);
+    overflow-x: hidden;
+    color: #7dd3fc;
     text-align: center;
 }
 
 h1 {
+    font-family: 'Orbitron', sans-serif;
     text-shadow: 0 0 15px #00f7ff;
 }
 
+.linea {
+    width: 250px;
+    height: 3px;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    background: linear-gradient(
+        to right,
+        transparent,
+        #7dd3fc,
+        #c084fc,
+        transparent
+    );
+    border-radius: 10px;
+    box-shadow: 0 0 15px #7dd3fc;
+}
+
 .box {
+    position: relative;
+    overflow: hidden;
     margin: 40px auto;
     padding: 20px;
     width: 350px;
-    border: 2px solid #00f7ff;
-    border-radius: 15px;
-    box-shadow: 0 0 20px #00f7ff;
-    background: rgba(0,0,0,0.7);
+    border: 1px solid rgba(125, 211, 252, 0.5);
+    backdrop-filter: blur(15px);
+    border-radius: 25px;
+    box-shadow: 0 0 20px rgba(125, 211, 252, 0.4),
+                0 0 20px rgba(192, 132, 252, 0.2);
+    background: rgba(15,23,42,0.7);
+}
+
+.box::before {
+    content: "";
+    position: absolute;
+    top: -150%;
+    left: -50%;
+    width: 200%;
+    height: 300%;
+    background: linear-gradient(
+        transparent,
+        rgba(255, 255, 255, 0.04),
+        transparent
+    );
+    transform: rotate(25deg);
+    animation: scan 7s linear infinite;
+}
+
+@keyframes scan {
+    from {
+        transform: 
+            translateY(-100%);
+            rotate: (25deg);
+    }
+    to {
+        transform: 
+            translateY(100%);
+            rotate: (25deg);
+    }
 }
 
 input, select {
@@ -33,32 +85,57 @@ input, select {
     background: black;
     border: 1px solid #00f7ff;
     color: #00f7ff;
+    font-size: 18px;
+    border-radius: 12px;
+    transition: 0.3s ease;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    box-shadow: 
+    0 0 15px #7dd3fc,
+    0 0 25px #c084fc;
+    border: 1px solid #c084fc;
 }
 
 button {
-    background: #00f7ff;
-    color: black;
-    padding: 10px;
+    background: linear-gradient(135deg, #7dd3fc, #c084fc);
+    color: white;
+    padding: 12px 25px;
+    border-radius: 12px;
     border: none;
     cursor: pointer;
     font-weight: bold;
     transition: 0.3s;
+    box-shadow: 0 0 15px rgba(125, 211, 252, 0.5);
 }
 
 button:hover {
-    background: red;
-    color: white;
+    transform: scale(1.05);
+    box-shadow:  0 0 30px rgba(192,132,252,0.8);
 }
 
 #resultado {
     font-size: 20px;
     margin-top: 15px;
-    animation: glow 1s infinite alternate;
+    animation: pulse 1s infinite alternate;
+    color: #7dd3fc;
+    font-weight: bold;
 }
 
-@keyframes glow {
-    from { text-shadow: 0 0 10px #00f7ff; }
-    to { text-shadow: 0 0 20px #00f7ff; }
+@keyframes pulse {
+    from { transform: scale(1);
+        text-shadow: 
+         0 0 10px #7dd3fc,
+         0 0 20px #7dd3fc;
+     }
+    to { 
+        transform: scale(1.05);
+        text-shadow: 
+        0 0 20px #c084fc,
+        0 0 40px #7dd3fc;
+     }
 }
 
 #jarvis {
@@ -66,13 +143,141 @@ button:hover {
     font-style: italic;
     color: #00ff9c;
 }
+
+.energia {
+    width: 250px;
+    height: 10px;
+    margin: auto;
+    margin-top: 15px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(125, 211, 252, 0.3);
+}
+
+.carga {
+    width: 70%;
+    height: 100%;
+    border-radius: 20px;
+    background: linear-gradient(
+        90deg,
+        #7dd3fc,
+        #c084fc
+    );
+    box-shadow: 
+        0 0 15px #7dd3fc,
+        0 0 30px #c084fc;
+    animation: energia 3s ease-in-out infinite alternate;
+}
+
+@keyframes energia {
+    from {
+        width: 45%;
+    }
+    to {
+        width: 90%;
+    }
+}
+
+.stars {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        radial-gradient(circle, rgba(125, 211, 252, 0.8) 1px, transparent 2px),
+        radial-gradient(circle, rgba(192, 132, 252, 0.6) 2px, transparent 2px),
+        radial-gradient(circle, rgba(255, 255, 255, 0.7) 1.5px, transparent 2px);
+    background-size: 
+        120px 120px,
+        200px 200px,
+        160px 160px;
+    background-position: 
+        0 0,
+        40px 60px,
+        100px 30px;
+    animation: moveStars 40s ease-in-out infinite;
+    opacity: 0.5;
+    z-index: -1;
+}
+@keyframes moveStars {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    25% {
+        transform: translate(-10px, -15px);
+    }
+
+    50% {
+        transform: translate(5px, -25px);
+    }
+
+    75% {
+        transform: translate(-5px, -10px);
+    }
+
+    100% {
+        transform: translate(0, 0);
+    }
+}
+
+#simulacion {
+    margin-top: 25px;
+    min-height: 120px;
+    border-top: 1px solid rgba(125, 211, 252, 0.2);
+    padding-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bloque {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(
+        135deg,
+        #7dd3fc,
+        #c084fc
+    );
+    border-radius: 12px;
+    position: relative;
+    box-shadow: 
+        0 0 15px #7dd3fc
+        0 0 30px #c084fc;
+}
+
+.flecha {
+    position: relative;
+    font-size: 35px;
+    color: #7dd3fc;
+    text-shadow: 0 0 10px #7dd3fc;
+}
+
+@keyframes moverBloque {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(150px);
+    }
+}
+
 </style>
 </head>
 
 <body>
 
-<h1> SISTEMA STARK</h1>
-<p>Bienvenido, Selecciona una misión.</p>
+<div class="stars"></div>
+
+<h1>DANI PHYSICS CORE</h1>
+<div class="linea"></div>
+<p>Centro de Simulacion de Fisica • Protocolo Dani v2.6</p>
+
+<div class="energia">
+    <div class="carga"></div>
+</div>
 
 <div class="box">
 
@@ -87,10 +292,12 @@ button:hover {
 
 <div id="campos"></div>
 
-<button onclick="resolver()">Ejecutar cálculo</button>
+<button id="btnCalcular" onclick="resolver()">Ejecutar Calculo</button>
 
 <h3 id="resultado"></h3>
 <p id="procedimiento"></p>
+<div id="panel"></div>
+<div id="simulacion"></div>
 <p id="jarvis"></p>
 
 </div>
@@ -98,14 +305,14 @@ button:hover {
 <script>
 
 function hablar(msg) {
-    document.getElementById("jarvis").innerText = "JARVIS: " + msg;
+    document.getElementById("jarvis").innerText = "🟣 JARVIS: " + msg;
 }
 
 function mostrarCampos() {
     let tipo = document.getElementById("tipo").value;
     let campos = document.getElementById("campos");
 
-    hablar("Configurando misión...");
+    hablar("Nivel de estrés académico: preocupante.");
 
     if (tipo == "1") {
         campos.innerHTML = `
@@ -151,12 +358,18 @@ function mostrarCampos() {
 }
 
 function resolver() {
+    
+    document.getElementById("clickSound").play();
     let tipo = document.getElementById("tipo").value;
     let g = 9.8;
     let resultado = "";
     let procedimiento = "";
+    let boton = document.getElementById("btnCalcular");
+    boton.innerText = "Analizando...";
+    boton.disabled = true;
 
-    hablar("Procesando datos...");
+    hablar("Analizando variables...");
+    setTimeout(() => {
 
     if (tipo == "1") {
         let m = parseFloat(document.getElementById("m1").value);
@@ -165,8 +378,19 @@ function resolver() {
         let a = F / m;
 
         resultado = "Aceleración: " + a.toFixed(2);
+        document.getElementById("panel").innerHTML = `
+        <div class="bloque"></div>
+
+        <div class="flecha">→</div>
+        🧾 Datos del sistema:<br>
+        • Masa: ${m}<br>
+        • Fuerza: ${F}<br>
+        • Tipo: Sin fricción
+`;  
+        document.querySelector(".bloque").style.animation =
+        "moverBloque 2s ease forwards";
         procedimiento = "F = m·a";
-        hablar("Cálculo completado.");
+        hablar("Movimiento limpio detectado.");
     }
 
     else if (tipo == "2") {
@@ -178,8 +402,20 @@ function resolver() {
         let a = (F - fr) / m;
 
         resultado = "Aceleración: " + a.toFixed(2);
+        document.getElementById("panel").innerHTML = `
+        <div class="bloque"></div>
+
+        <div class="flecha">→</div>
+        🧾 Datos del sistema:<br>
+        • Masa: ${m}<br>
+        • Fuerza: ${F}<br>
+        • μ: ${mu}<br>
+        • Fricción calculada: ${fr.toFixed(2)}
+`;
+        document.querySelector(".bloque").style.animation =
+        "moverBloque 2s ease forwards";
         procedimiento = "Fricción = μ·m·g → F - fricción = m·a";
-        hablar("Fricción considerada.");
+        hablar("Fricción considerada Ajustando calculo dinamico...");
     }
 
     else if (tipo == "3") {
@@ -189,8 +425,18 @@ function resolver() {
         let a = (m2 - m1) * g / (m1 + m2);
 
         resultado = "Aceleración: " + a.toFixed(2);
+        document.getElementById("panel").innerHTML = `
+        <div class="bloque"></div>
+
+        div class="flecha">→</div>
+        🧾 Sistema de poleas:<br>
+        • m1: ${m1}<br>
+        • m2: ${m2}
+`;
+        document.querySelector(".bloque").style.animation =
+        "moverBloque 2s ease forwards";
         procedimiento = "Sistema de polea";
-        hablar("Sistema de poleas activo.");
+        hablar("Sistema de poleas estabilizado.");
     }
 
     else if (tipo == "4") {
@@ -201,8 +447,19 @@ function resolver() {
         let a = (m3 - m1) * g / (m1 + m2 + m3);
 
         resultado = "Aceleración: " + a.toFixed(2);
+        document.getElementById("panel").innerHTML = `
+        <div class="bloque"></div>
+
+        <div class="flecha">→</div>
+        🧾 Sistema 3 masas:<br>
+        • m1: ${m1}<br>
+        • m2: ${m2}<br>
+        • m3: ${m3}
+`;
+        document.querySelector(".bloque").style.animation =
+        "moverBloque 2s ease forwards";
         procedimiento = "Sistema de 3 masas";
-        hablar("Sistema complejo resuelto.");
+        hablar("Resolviendo dinamica avanzada");
     }
 
     else if (tipo == "5") {
@@ -215,15 +472,32 @@ function resolver() {
         let a = Fx / m;
 
         resultado = "Aceleración: " + a.toFixed(2);
+        document.getElementById("panel").innerHTML = `
+        <div class="bloque"></div>
+
+        <div class="flecha">→</div>
+        🧾 Fuerza angular:<br>
+        • Masa: ${m}<br>
+        • Fuerza: ${F}<br>
+        • Ángulo: ${ang}°
+`;
+        document.querySelector(".bloque").style.animation =
+        "moverBloque 2s ease forwards";
         procedimiento = "Fx = F·cos(θ)";
-        hablar("Ángulo procesado.");
+        hablar("Descomponiendo vectores.");
     }
 
     document.getElementById("resultado").innerText = resultado;
     document.getElementById("procedimiento").innerText = procedimiento;
+
+     boton.innerText = "Ejecutar Calculo";
+        boton.disabled = false;
+    }, 1200);
 }
 
 </script>
+
+<audio id="clickSound" src="click.mp3"></audio>
 
 </body>
 </html>
