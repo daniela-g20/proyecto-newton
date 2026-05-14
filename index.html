@@ -144,6 +144,13 @@ button:hover {
     color: #00ff9c;
 }
 
+canvas{
+    margin-top:5px;
+    border:1px solid #00f7ff;
+    border-radius:10px;
+    background:#031224;
+}
+
 .energia {
     width: 250px;
     height: 10px;
@@ -288,6 +295,7 @@ button:hover {
     <option value="3">Polea</option>
     <option value="4">3 masas</option>
     <option value="5">Fuerza con ángulo</option>
+    <option value="6">3ra Ley de Newton</option>
 </select>
 
 <div id="campos"></div>
@@ -298,6 +306,8 @@ button:hover {
 <p id="procedimiento"></p>
 <div id="panel"></div>
 <div id="simulacion"></div>
+<h3 style="margin-top:10px;">Visualización Física</h3>
+<canvas id="lienzo" width="400" height="180"></canvas>
 <p id="jarvis"></p>
 
 </div>
@@ -350,6 +360,12 @@ function mostrarCampos() {
         <input id="F" placeholder="Fuerza">
         <input id="angulo" placeholder="Ángulo">
         `;
+    }
+
+    else if (tipo == "6") {
+    campos.innerHTML = `
+    <input type="number" id="F" placeholder="Fuerza aplicada (N)">
+    `;
     }
 
     else {
@@ -487,12 +503,97 @@ function resolver() {
         hablar("Descomponiendo vectores.");
     }
 
+    else if (tipo == "6") {
+        let F = parseFloat(document.getElementById("F").value);
+        resultado = "Fuerza de reacción: " + (-F).toFixed(2) + " N";
+        procedimiento = "Toda acción genera una reacción igual y opuesta.";
+        hablar("Tercera ley aplicada.");
+        dibujarTerceraLey(F);
+    }
+
     document.getElementById("resultado").innerText = resultado;
     document.getElementById("procedimiento").innerText = procedimiento;
 
      boton.innerText = "Ejecutar Calculo";
         boton.disabled = false;
     }, 1200);
+}
+
+function dibujarTerceraLey(F) {
+
+    let c = document.getElementById("lienzo");
+    let ctx = c.getContext("2d");
+
+    ctx.clearRect(0, 0, c.width, c.height);
+
+    ctx.strokeStyle = "#00f7ff";
+    ctx.fillStyle = "#00f7ff";
+    ctx.lineWidth = 3;
+    ctx.font = "18px Arial";
+
+    // Suelo
+    ctx.beginPath();
+    ctx.moveTo(380,120);
+    ctx.lineTo(380,115);
+    ctx.stroke();
+
+    // Bloque 1
+    ctx.strokeRect(50,55,70,50);
+
+    // Bloque 2
+    ctx.strokeRect(260,55,70,50);
+
+    // Fuerza 1 →
+    ctx.beginPath();
+    ctx.moveTo(120,80);
+    ctx.lineTo(180,80);
+    ctx.stroke();
+
+    ctx.fillText("F₁ = " + F + " N", 70, 145);
+
+    // Punta flecha →
+    ctx.beginPath();
+    ctx.moveTo(180,80);
+    ctx.lineTo(170,75);
+    ctx.lineTo(170,85);
+    ctx.fill();
+
+    // Fuerza 2 ←
+    ctx.beginPath();
+    ctx.moveTo(260,80);
+    ctx.lineTo(200,80);
+    ctx.stroke();
+
+    ctx.fillText("F₂ = -" + F + " N", 220, 145);
+
+    // Punta flecha ←
+    ctx.beginPath();
+    ctx.moveTo(200,80);
+    ctx.lineTo(210,75);
+    ctx.lineTo(210,85);
+    ctx.fill();
+
+    // Aceleración 1 →
+    ctx.fillStyle = "#ff4dff";
+
+    ctx.beginPath();
+    ctx.moveTo(80,70);
+    ctx.lineTo(130,70);
+    ctx.stroke();
+
+    ctx.fillText("a₁", 135,75);
+
+    // Aceleración 2 ←
+    ctx.beginPath();
+    ctx.moveTo(300,70);
+    ctx.lineTo(250,70);
+    ctx.stroke();
+
+    ctx.fillText("a₂", 220,75);
+
+    // Valores aceleración
+    ctx.fillText("a₁ = 6.2 m/s²", 50,165);
+    ctx.fillText("a₂ = -6.2 m/s²", 210,165);
 }
 
 </script>
