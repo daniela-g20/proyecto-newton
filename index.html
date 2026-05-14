@@ -299,6 +299,7 @@ canvas{
 </select>
 
 <div id="campos"></div>
+<p id="enunciado" style="margin-top:15px; color:#b8f7ff;"></p>
 
 <button id="btnCalcular" onclick="resolver()">Ejecutar Calculo</button>
 
@@ -329,6 +330,8 @@ function mostrarCampos() {
         <input id="m1" placeholder="Masa">
         <input id="F" placeholder="Fuerza">
         `;
+        document.getElementById("enunciado").innerText =
+            "Una caja es empujada horizontalmente sobre una superficie sin fricción. Calcula la aceleración del sistema.";
     }
 
     else if (tipo == "2") {
@@ -337,6 +340,8 @@ function mostrarCampos() {
         <input id="F" placeholder="Fuerza">
         <input id="mu" placeholder="Coeficiente fricción">
         `;
+        document.getElementById("enunciado").innerText =
+            "Una caja se mueve sobre una superficie con fricción. Calcula la aceleración considerando la fuerza de rozamiento.";
     }
 
     else if (tipo == "3") {
@@ -344,6 +349,8 @@ function mostrarCampos() {
         <input id="m1" placeholder="Masa 1">
         <input id="m2" placeholder="Masa 2">
         `;
+        document.getElementById("enunciado").innerText =
+            "Dos masas están conectadas mediante una polea ideal. Determina la aceleración del sistema.";
     }
 
     else if (tipo == "4") {
@@ -352,6 +359,8 @@ function mostrarCampos() {
         <input id="m2" placeholder="Masa 2">
         <input id="m3" placeholder="Masa 3">
         `;
+        document.getElementById("enunciado").innerText =
+            "Tres masas interactúan en un sistema dinámico. Calcula la aceleración del conjunto.";
     }
 
     else if (tipo == "5") {
@@ -360,12 +369,17 @@ function mostrarCampos() {
         <input id="F" placeholder="Fuerza">
         <input id="angulo" placeholder="Ángulo">
         `;
+        document.getElementById("enunciado").innerText =
+            "Una fuerza se aplica formando un ángulo respecto a la horizontal. Calcula la aceleración horizontal.";
     }
 
     else if (tipo == "6") {
-    campos.innerHTML = `
-    <input type="number" id="F" placeholder="Fuerza aplicada (N)">
-    `;
+        campos.innerHTML = `
+        <input type="number" id="F" placeholder="Fuerza aplicada (N)">
+        `;
+        document.getElementById("enunciado").innerText =
+            "Spider-Man empuja un objeto aplicando una fuerza. Determina la fuerza de reacción según la tercera ley de Newton.";
+
     }
 
     else {
